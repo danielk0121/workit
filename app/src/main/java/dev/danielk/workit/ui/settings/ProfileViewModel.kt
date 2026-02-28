@@ -7,16 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dev.danielk.workit.R
 import dev.danielk.workit.data.repository.WorkoutRepository
+import dev.danielk.workit.model.Badge
 import dev.danielk.workit.model.TtsStyle
 import kotlinx.coroutines.launch
-
-data class Badge(
-    val id: String,
-    val name: String,
-    val description: String,
-    val iconResId: Int,
-    val isUnlocked: Boolean = false
-)
 
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -46,14 +39,17 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
 
     private fun loadProfileData() {
         viewModelScope.launch {
-            _currentStreak.value = repository.getCurrentStreak()
-            _maxStreak.value = repository.getMaxStreak()
+            val current = repository.getCurrentStreak()
+            val max = repository.getMaxStreak()
+            val totalDays = repository.getTotalWorkoutDays()
+
+            _currentStreak.value = current
+            _maxStreak.value = max
             
-            // Dummy badges for now
             _badges.value = listOf(
-                Badge("streak_7", "7일 연속", "7일 동안 꾸준히 운동했어요!", R.drawable.ic_grass, true),
-                Badge("first_workout", "첫 걸음", "첫 운동을 완료했어요!", R.drawable.ic_home, true),
-                Badge("month_workit", "한 달 워킷러", "한 달 동안 꾸준히 워킷을 사용했어요!", R.drawable.ic_grass, false)
+                Badge("streak_7", "7일 연속", "7일 동안 꾸준히 운동했어요!", R.drawable.ic_grass, max >= 7),
+                Badge("first_workout", "첫 걸음", "첫 운동을 완료했어요!", R.drawable.ic_home, totalDays >= 1),
+                Badge("month_workit", "한 달 워킷러", "한 달 동안 꾸준히 워킷을 사용했어요!", R.drawable.ic_grass, totalDays >= 30)
             )
         }
     }
