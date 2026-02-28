@@ -194,6 +194,14 @@
     - 목록에서 운동 시작 시각을 한눈에 확인 가능
     - 빌드 확인: `./gradlew assembleDebug` 성공
 
+- 2026-03-01 20:40:00 (+09:00)
+  - [x] 페이즈5 버그 재수정: 홈 > 새 운동 시작 > 앱 크래시 (2차)
+    - 원인: `foregroundServiceType="health"` 사용 시 Android 14에서 ACTIVITY_RECOGNITION, BODY_SENSORS, HIGH_SAMPLING_RATE_SENSORS 권한 필요 (SecurityException)
+    - 해결: Manifest 및 코드에서 `health` → `dataSync` 타입으로 변경
+    - AndroidManifest.xml: FOREGROUND_SERVICE_HEALTH → FOREGROUND_SERVICE_DATA_SYNC 권한 교체
+    - WorkoutTimerService: FOREGROUND_SERVICE_TYPE_HEALTH → FOREGROUND_SERVICE_TYPE_DATA_SYNC
+    - 빌드 확인: `./gradlew assembleDebug` 성공
+
 - 2026-03-01 20:25:00 (+09:00)
   - [x] 페이즈5 개선: 타이머 로직 백그라운드 실행 개선
     - `WorkoutTimerService`에 `PARTIAL_WAKE_LOCK` 추가: 화면 꺼짐 시에도 CPU 유지하여 타이머 정확도 보장
