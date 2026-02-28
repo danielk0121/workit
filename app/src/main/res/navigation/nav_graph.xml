@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="dev.danielk.workit.ui.home.HomeFragment"
+        android:label="홈"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_setup"
+            app:destination="@id/workoutSetupFragment" />
+        <action
+            android:id="@+id/action_home_to_chat"
+            app:destination="@id/chatFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/workoutSetupFragment"
+        android:name="dev.danielk.workit.ui.setup.WorkoutSetupFragment"
+        android:label="운동 설정"
+        tools:layout="@layout/fragment_workout_setup">
+        <action
+            android:id="@+id/action_setup_to_chat"
+            app:destination="@id/chatFragment"
+            app:popUpTo="@id/workoutSetupFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="dev.danielk.workit.ui.chat.ChatFragment"
+        android:label="운동"
+        tools:layout="@layout/fragment_chat">
+        <argument
+            android:name="sessionId"
+            app:argType="long" />
+        <argument
+            android:name="autoStart"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/grassFragment"
+        android:name="dev.danielk.workit.ui.grass.GrassFragment"
+        android:label="잔디밭"
+        tools:layout="@layout/fragment_grass" />
+
+</navigation>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="green_primary">#40C463</color>
+    <color name="green_dark">#2EA44F</color>
+    <color name="green_light">#9BE9A8</color>
+    <color name="yellow_accent">#F5C543</color>
+    <color name="red_accent">#E05B4B</color>
+    <color name="gray_empty">#E8E8E8</color>
+    <color name="bg_surface">#F6F8FA</color>
+    <color name="bg_bot_bubble">#F0F4F8</color>
+    <color name="text_primary">#1A1A2E</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+</resources>

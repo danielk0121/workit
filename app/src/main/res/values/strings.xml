@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">워킷</string>
+    <string name="nav_home">홈</string>
+    <string name="nav_grass">잔디밭</string>
+    <string name="new_workout">+ 새 운동 시작</string>
+    <string name="no_sessions">아직 운동 기록이 없어요\n새 운동을 시작해볼까요? 💪</string>
+    <string name="workout_setup_title">운동 설정</string>
+    <string name="btn_start_workout">운동 시작!</string>
+    <string name="preset_title">추천 프리셋</string>
+    <string name="custom_title">직접 설정</string>
+    <string name="tts_style_title">AI 코치 스타일</string>
+    <string name="ready_seconds_label">준비 시간 (초)</string>
+    <string name="work_seconds_label">운동 시간 (초)</string>
+    <string name="rest_seconds_label">휴식 시간 (초)</string>
+    <string name="repeat_count_label">반복 횟수</string>
+    <string name="grass_title">잔디밭</string>
+    <string name="stat_total_days">총 운동일</string>
+    <string name="stat_max_streak">최장 스트릭</string>
+    <string name="stat_current_streak">현재 스트릭</string>
+</resources>
