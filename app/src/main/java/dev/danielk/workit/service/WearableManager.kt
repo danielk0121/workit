@@ -21,18 +21,22 @@ object WearableManager {
         currentRound: Int,
         totalRounds: Int
     ) {
-        val dataClient = Wearable.getDataClient(context)
-        val putDataMapReq = PutDataMapRequest.create(PATH_WORKOUT)
-        
-        putDataMapReq.dataMap.apply {
-            putString(KEY_STATE, state.name)
-            putInt(KEY_TIME, remainingSeconds)
-            putInt(KEY_ROUND, currentRound)
-            putInt(KEY_TOTAL_ROUNDS, totalRounds)
-            putLong(KEY_TIMESTAMP, System.currentTimeMillis())
-        }
+        try {
+            val dataClient = Wearable.getDataClient(context)
+            val putDataMapReq = PutDataMapRequest.create(PATH_WORKOUT)
 
-        val putDataReq = putDataMapReq.asPutDataRequest().setUrgent()
-        dataClient.putDataItem(putDataReq)
+            putDataMapReq.dataMap.apply {
+                putString(KEY_STATE, state.name)
+                putInt(KEY_TIME, remainingSeconds)
+                putInt(KEY_ROUND, currentRound)
+                putInt(KEY_TOTAL_ROUNDS, totalRounds)
+                putLong(KEY_TIMESTAMP, System.currentTimeMillis())
+            }
+
+            val putDataReq = putDataMapReq.asPutDataRequest().setUrgent()
+            dataClient.putDataItem(putDataReq)
+        } catch (_: Exception) {
+            // 워치가 연결되지 않은 기기에서는 무시
+        }
     }
 }

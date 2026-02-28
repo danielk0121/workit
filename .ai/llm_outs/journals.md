@@ -182,6 +182,12 @@
     - 100ms 단위의 정밀한 체크를 통해 초 단위 전환 시점의 반응성 개선
     - 빌드 확인 및 10분 이상 타이머 테스트 시 오차 범위 0.1초 미만 확인
 
+- 2026-03-01 19:00:00 (+09:00)
+  - [x] 페이즈5 버그 수정: 홈 > 새 운동 시작 > 운동 시작 > 앱 크래시
+    - 원인: `WearableManager.sendWorkoutStatus()`에서 `Wearable.getDataClient()` 호출 시 워치가 없는 기기에서 `ApiException` 발생
+    - 해결: `WearableManager.sendWorkoutStatus()` 내부를 try-catch로 감싸 워치 미연결 기기에서도 정상 동작하도록 수정
+    - 빌드 확인: `./gradlew assembleDebug` 성공
+
 
 
 
