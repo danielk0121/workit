@@ -64,6 +64,25 @@ class HomeFragment : Fragment() {
         binding.fabNewWorkout.setOnClickListener {
             findNavController().navigate(R.id.action_home_to_setup)
         }
+
+        setupGrassPreview()
+    }
+
+    private fun setupGrassPreview() {
+        binding.grassPreview.setWeeksCount(13) // ~3 months
+        viewModel.grassRecords.observe(viewLifecycleOwner) { records ->
+            binding.grassPreview.setRecords(records)
+            val streak = viewModel.getCurrentStreak(records)
+            binding.tvStreakBanner.text = if (streak > 0) "🔥 ${streak}일 연속 운동 중!" else "오늘 운동을 시작해볼까요?"
+        }
+
+        binding.grassPreview.onDateClick = { date ->
+            val record = viewModel.grassRecords.value?.find { it.date == date }
+            if (record != null && record.sessionId > 0) {
+                val action = HomeFragmentDirections.actionHomeToChat(record.sessionId)
+                findNavController().navigate(action)
+            }
+        }
     }
 
     override fun onDestroyView() {

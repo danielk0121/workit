@@ -16,6 +16,42 @@
             android:background="@color/green_primary"
             app:title="워킷 💪"
             app:titleTextColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/green_primary"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_streak_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="오늘 운동을 시작해볼까요?"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp" />
+
+            <dev.danielk.workit.ui.grass.GrassView
+                android:id="@+id/grass_preview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_bubble_bot"
+                android:padding="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="4dp"
+                android:text="최근 3개월"
+                android:textColor="@color/green_light"
+                android:textSize="10sp" />
+
+        </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView

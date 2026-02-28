@@ -29,6 +29,7 @@ class GrassView @JvmOverloads constructor(
 
     private var records: Map<String, GrassRecord> = emptyMap()
     private var weeks: List<List<String?>> = emptyList()
+    private var weeksCount: Int = 52
 
     var onDateClick: ((String) -> Unit)? = null
 
@@ -41,6 +42,13 @@ class GrassView @JvmOverloads constructor(
         GrassGrade.SPECIAL to Color.parseColor("#E05B4B")
     )
 
+    fun setWeeksCount(count: Int) {
+        weeksCount = count
+        weeks = buildWeeks()
+        requestLayout()
+        invalidate()
+    }
+
     fun setRecords(recordList: List<GrassRecord>) {
         records = recordList.associateBy { it.date }
         weeks = buildWeeks()
@@ -50,10 +58,10 @@ class GrassView @JvmOverloads constructor(
     private fun buildWeeks(): List<List<String?>> {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val cal = Calendar.getInstance()
-        // Go back 52 weeks from Sunday of current week
+        // Go back weeksCount from Sunday of current week
         cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
         val endCal = cal.clone() as Calendar
-        cal.add(Calendar.WEEK_OF_YEAR, -51)
+        cal.add(Calendar.WEEK_OF_YEAR, -(weeksCount - 1))
 
         val allWeeks = mutableListOf<List<String?>>()
         while (!cal.after(endCal)) {
