@@ -128,3 +128,13 @@
     - `WorkoutSetupViewModel`에서 `workoutName` 데이터를 관리하고 세션 생성 시 날짜와 함께 타이틀로 조합하도록 개선
     - `WorkoutSetupFragment`에서 프리셋 선택 시 해당 이름을 자동 입력하고 사용자 정의 입력을 동기화하도록 구현
     - 빌드 확인 및 커스텀 운동 이름이 포함된 세션 생성 로직 검증 완료
+
+- 2026-03-01 16:45:00 (+09:00)
+  - [x] 기능 구현: 위젯 (홈 화면 잔디밭 위젯)
+    - `grass_widget_info.xml` 정의 및 위젯 기본 설정(2x1 이상 권장)
+    - `widget_grass.xml` 레이아웃 구현: 스트릭 정보 및 잔디밭 Bitmap 출력용 ImageView 포함
+    - `GrassWidgetProvider` 구현: `RemoteViews`를 사용하여 홈 화면에 위젯 출력
+    - `drawGrassBitmap` 함수를 통해 최근 12주간의 운동 기록을 Bitmap으로 동적 렌더링하는 로직 구현
+    - `CoroutineScope`와 `goAsync` 형태의 데이터 로딩을 통해 위젯 업데이트 시 DB 연동 처리
+    - `AndroidManifest.xml`에 위젯 리시버 등록 및 `PendingIntent` (Android 12 대응) 적용 완료
+    - 빌드 확인 및 위젯용 비트맵 생성 로직 검증 완료
