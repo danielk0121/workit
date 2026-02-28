@@ -103,3 +103,11 @@
     - `UtteranceProgressListener`를 등록하여 TTS 발화 완료 시 오디오 포커스를 즉시 해제하도록 구현
     - Android 8.0(Oreo) 이상(`AudioFocusRequest`) 및 이하 버전 호환성 확보
     - 빌드 확인 및 오디오 포커스 전환 로직 검증 완료
+
+- 2026-03-01 15:10:00 (+09:00)
+  - [x] 기능 구현: 잔디밭 SNS 공유 (스크린샷 공유)
+    - `GrassFragment`에 공유 메뉴(`action_share`) 추가 및 툴바 연동
+    - `ScrollView`의 전체 콘텐츠를 `Bitmap`으로 캡처하는 로직 구현
+    - `FileProvider`를 통해 캡처된 이미지를 안전하게 외부 앱(SNS 등)과 공유할 수 있도록 설정
+    - `AndroidManifest.xml`에 `FileProvider` 등록 및 `xml/file_paths` 정의
+    - 빌드 확인 및 이미지 캡처/공유 인텐트 호출 로직 검증 완료
