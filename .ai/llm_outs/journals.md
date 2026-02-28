@@ -138,3 +138,11 @@
     - `CoroutineScope`와 `goAsync` 형태의 데이터 로딩을 통해 위젯 업데이트 시 DB 연동 처리
     - `AndroidManifest.xml`에 위젯 리시버 등록 및 `PendingIntent` (Android 12 대응) 적용 완료
     - 빌드 확인 및 위젯용 비트맵 생성 로직 검증 완료
+
+- 2026-03-01 17:15:00 (+09:00)
+  - [x] 기능 구현: 친구와 채팅방 공유 (운동 설정 공유)
+    - `menu_workout_setup.xml` 정의 및 `WorkoutSetupFragment` 툴바에 공유 메뉴 연동
+    - 현재 설정된 운동 프리셋(준비, 운동, 휴식 시간 및 반복 횟수)을 텍스트 메시지로 조합하는 로직 구현
+    - `Intent.ACTION_SEND`를 사용하여 외부 메신저 및 SNS로 운동 가이드를 공유할 수 있는 기능 추가
+    - 빌드 시 발생한 `R` 클래스 임포트 누락 오류 수정 및 최종 빌드 성공 확인
+
