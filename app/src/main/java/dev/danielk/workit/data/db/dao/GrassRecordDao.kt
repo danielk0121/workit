@@ -22,6 +22,9 @@ interface GrassRecordDao {
     @Query("SELECT MAX(streakCount) FROM grass_records")
     suspend fun getMaxStreak(): Int?
 
+    @Query("SELECT COUNT(*) FROM grass_records WHERE date LIKE :monthPrefix || '%' AND grade != 'NONE'")
+    suspend fun getWorkoutCountByMonth(monthPrefix: String): Int
+
     @Query("SELECT COUNT(*) FROM grass_records WHERE grade != 'NONE'")
     suspend fun getTotalWorkoutDays(): Int
 }

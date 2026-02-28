@@ -34,11 +34,18 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     private val _isReminderEnabled = MutableLiveData<Boolean>()
     val isReminderEnabled: LiveData<Boolean> = _isReminderEnabled
 
+    private val _monthlyGoal = MutableLiveData<Int>()
+    val monthlyGoal: LiveData<Int> = _monthlyGoal
+
+    private val _monthlyWorkoutCount = MutableLiveData<Int>()
+    val monthlyWorkoutCount: LiveData<Int> = _monthlyWorkoutCount
+
     init {
         loadProfileData()
         _ttsStyle.value = prefs.ttsStyle
         _isDarkMode.value = prefs.isDarkMode
         _isReminderEnabled.value = prefs.isReminderEnabled
+        _monthlyGoal.value = prefs.monthlyGoal
     }
 
     private fun loadProfileData() {
@@ -46,9 +53,13 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             val current = repository.getCurrentStreak()
             val max = repository.getMaxStreak()
             val totalDays = repository.getTotalWorkoutDays()
+            
+            val monthPrefix = java.text.SimpleDateFormat("yyyy-MM", java.util.Locale.getDefault()).format(java.util.Date())
+            val monthCount = repository.getWorkoutCountByMonth(monthPrefix)
 
             _currentStreak.value = current
             _maxStreak.value = max
+            _monthlyWorkoutCount.value = monthCount
             
             _badges.value = listOf(
                 Badge("streak_7", "7일 연속", "7일 동안 꾸준히 운동했어요!", R.drawable.ic_grass, max >= 7),
@@ -61,6 +72,11 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     fun setTtsStyle(style: TtsStyle) {
         _ttsStyle.value = style
         prefs.ttsStyle = style
+    }
+
+    fun setMonthlyGoal(goal: Int) {
+        _monthlyGoal.value = goal
+        prefs.monthlyGoal = goal
     }
 
     fun setDarkMode(enabled: Boolean) {

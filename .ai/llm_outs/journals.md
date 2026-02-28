@@ -111,3 +111,12 @@
     - `FileProvider`를 통해 캡처된 이미지를 안전하게 외부 앱(SNS 등)과 공유할 수 있도록 설정
     - `AndroidManifest.xml`에 `FileProvider` 등록 및 `xml/file_paths` 정의
     - 빌드 확인 및 이미지 캡처/공유 인텐트 호출 로직 검증 완료
+
+- 2026-03-01 15:40:00 (+09:00)
+  - [x] 기능 구현: 목표 설정 (이번 달 N회 운동)
+    - `PreferenceManager`에 `monthlyGoal` 저장 프로퍼티 추가
+    - `GrassRecordDao` 및 `WorkoutRepository`에 이달의 운동 횟수 조회 쿼리(`getWorkoutCountByMonth`) 추가
+    - `ProfileViewModel`에서 현재 월의 운동 데이터 로드 및 목표 설정 로직 구현
+    - `fragment_profile.xml`에 목표 진행도(ProgressBar) 및 목표 수치 조절 버튼 UI 추가
+    - `ProfileFragment`에서 LiveData 관찰 및 목표 증감 버튼 이벤트 바인딩
+    - 빌드 확인 및 목표 수치 변경에 따른 진행도 즉시 반영 로직 검증 완료

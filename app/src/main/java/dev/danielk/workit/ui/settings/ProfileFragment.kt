@@ -73,6 +73,23 @@ class ProfileFragment : Fragment() {
                 binding.switchReminder.isChecked = isEnabled
             }
         }
+
+        viewModel.monthlyGoal.observe(viewLifecycleOwner) { goal ->
+            binding.tvGoalValue.text = goal.toString()
+            binding.progressMonthly.max = goal
+            updateGoalProgress()
+        }
+
+        viewModel.monthlyWorkoutCount.observe(viewLifecycleOwner) { count ->
+            updateGoalProgress()
+        }
+    }
+
+    private fun updateGoalProgress() {
+        val current = viewModel.monthlyWorkoutCount.value ?: 0
+        val goal = viewModel.monthlyGoal.value ?: 10
+        binding.tvMonthlyProgress.text = "${current} / ${goal}회 완료"
+        binding.progressMonthly.progress = current
     }
 
     private fun setupListeners() {
@@ -84,6 +101,18 @@ class ProfileFragment : Fragment() {
                 else -> TtsStyle.COACH
             }
             viewModel.setTtsStyle(style)
+        }
+
+        binding.btnIncreaseGoal.setOnClickListener {
+            val current = viewModel.monthlyGoal.value ?: 10
+            viewModel.setMonthlyGoal(current + 1)
+        }
+
+        binding.btnDecreaseGoal.setOnClickListener {
+            val current = viewModel.monthlyGoal.value ?: 10
+            if (current > 1) {
+                viewModel.setMonthlyGoal(current - 1)
+            }
         }
 
         binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
