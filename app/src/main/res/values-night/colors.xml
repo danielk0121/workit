@@ -5,11 +5,11 @@
     <color name="green_light">#0E4429</color>
     <color name="yellow_accent">#F0B72F</color>
     <color name="red_accent">#F85149</color>
-    <color name="gray_empty">#161B22</color>
+    <color name="gray_empty">#30363D</color>
     <color name="bg_surface">#0D1117</color>
     <color name="bg_bot_bubble">#161B22</color>
     <color name="text_primary">#C9D1D9</color>
     <color name="text_secondary">#8B949E</color>
-    <color name="white">#0D1117</color>
-    <color name="black">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 </resources>
