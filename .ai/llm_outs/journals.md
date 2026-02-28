@@ -4,9 +4,9 @@
   - AI 프롬프트 확인 테스트 수행
   - .ai/tmp/test.txt 파일 생성 (날짜 및 10글자 문장 기록)
 
-- 2026-03-01 10:45:00 (+09:00)
-  - [x] 기능 구현: 다크모드, 라이트 모드 대응 및 설정 화면 추가
-    - `res/values-night/colors.xml`, `themes.xml`을 통한 테마 시스템 구축
-    - `SettingsFragment` 및 레이아웃 구현 (다크모드 스위치 포함)
-    - `HomeFragment` 툴바에 설정 메뉴 추가 및 내비게이션 연결
-    - 빌드 확인 및 테마 전환 로직 검증 완료
+- 2026-03-01 11:00:00 (+09:00)
+  - [x] 기능 개선: 잔디밭 셀 클릭 시 해당 채팅방 이동
+    - `GrassView`의 `onDateClick` 콜백을 `GrassFragment`에서 구현
+    - 클릭된 날짜의 `sessionId`를 조회하여 `ChatFragment`로 내비게이션 연결
+    - 데이터가 없는 경우를 위한 Toast 안내 추가
+    - `nav_graph.xml`에 `action_grass_to_chat` 정의

@@ -41,9 +41,13 @@ class GrassFragment : Fragment() {
         }
 
         binding.grassView.onDateClick = { date ->
-            // Navigate to that session's chat (if exists)
-            // For MVP: show date info as toast
-            android.widget.Toast.makeText(requireContext(), date, android.widget.Toast.LENGTH_SHORT).show()
+            val record = viewModel.grassRecords.value?.find { it.date == date }
+            if (record != null && record.sessionId > 0) {
+                val action = GrassFragmentDirections.actionGrassToChat(record.sessionId)
+                findNavController().navigate(action)
+            } else {
+                android.widget.Toast.makeText(requireContext(), "$date: 운동 기록이 없습니다.", android.widget.Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

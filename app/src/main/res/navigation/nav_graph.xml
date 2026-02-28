@@ -57,6 +57,10 @@
         android:id="@+id/grassFragment"
         android:name="dev.danielk.workit.ui.grass.GrassFragment"
         android:label="잔디밭"
-        tools:layout="@layout/fragment_grass" />
+        tools:layout="@layout/fragment_grass">
+        <action
+            android:id="@+id/action_grass_to_chat"
+            app:destination="@id/chatFragment" />
+    </fragment>
 
 </navigation>
