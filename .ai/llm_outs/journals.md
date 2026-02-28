@@ -194,6 +194,14 @@
     - 목록에서 운동 시작 시각을 한눈에 확인 가능
     - 빌드 확인: `./gradlew assembleDebug` 성공
 
+- 2026-03-01 20:25:00 (+09:00)
+  - [x] 페이즈5 개선: 타이머 로직 백그라운드 실행 개선
+    - `WorkoutTimerService`에 `PARTIAL_WAKE_LOCK` 추가: 화면 꺼짐 시에도 CPU 유지하여 타이머 정확도 보장
+    - `START_NOT_STICKY` → `START_STICKY`로 변경: 시스템에 의해 서비스 종료 시 자동 재시작
+    - `AndroidManifest.xml`에 `WAKE_LOCK` 권한 추가
+    - 운동 완료/중단 시 WakeLock 해제, onDestroy에서도 안전하게 해제
+    - 빌드 확인: `./gradlew assembleDebug` 성공
+
 - 2026-03-01 20:10:00 (+09:00)
   - [x] 페이즈5 개선: 메인화면 잔디밭 탭 삭제 및 홈 잔디밭 상세 보기 연결
     - `bottom_nav_menu.xml`에서 잔디밭 탭 항목 제거 (홈 탭만 남김)
