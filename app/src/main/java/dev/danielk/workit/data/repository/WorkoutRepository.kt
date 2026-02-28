@@ -51,6 +51,11 @@ class WorkoutRepository(context: Context) {
 
     suspend fun getTotalWorkoutDays(): Int = grassDao.getTotalWorkoutDays()
 
+    suspend fun getCurrentStreak(): Int {
+        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        return calculateCurrentStreak(today)
+    }
+
     suspend fun updateGrassAfterWorkout(sessionId: Long, isCompleted: Boolean) {
         val dateStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         val existing = grassDao.getByDate(dateStr)

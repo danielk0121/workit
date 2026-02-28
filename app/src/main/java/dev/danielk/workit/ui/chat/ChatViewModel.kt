@@ -170,6 +170,18 @@ class ChatViewModel(application: Application) : AndroidViewModel(application) {
             val elapsed = ((System.currentTimeMillis() - startTimeMillis) / 1000).toInt()
             repository.completeSession(sessionId, elapsed)
             repository.updateGrassAfterWorkout(sessionId, true)
+
+            // Check streak for special message
+            val streak = repository.getCurrentStreak()
+            if (streak >= 3) {
+                val streakText = BotScript.getStreakMessage(streak)
+                addMessage(ChatMessage(
+                    sessionId = sessionId,
+                    type = MessageType.BOT,
+                    content = streakText,
+                    workoutState = WorkoutState.DONE
+                ))
+            }
         }
     }
 
