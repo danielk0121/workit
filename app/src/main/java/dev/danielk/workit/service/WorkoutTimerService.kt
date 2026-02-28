@@ -34,6 +34,12 @@ class WorkoutTimerService : Service() {
 
         const val ACTION_START = "dev.danielk.workit.START"
         const val ACTION_STOP = "dev.danielk.workit.STOP"
+        const val ACTION_PAUSE = "dev.danielk.workit.PAUSE"
+        const val ACTION_RESUME = "dev.danielk.workit.RESUME"
+        const val ACTION_RESET = "dev.danielk.workit.RESET"
+
+        private val _isPaused = MutableStateFlow(false)
+        val isPaused = _isPaused.asStateFlow()
 
         const val EXTRA_SESSION_ID = "session_id"
         const val EXTRA_READY_SECONDS = "ready_seconds"
@@ -81,6 +87,9 @@ class WorkoutTimerService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
             ACTION_STOP -> stopWorkout()
+            ACTION_PAUSE -> { _isPaused.value = true; updateNotification("⏸ 일시정지") }
+            ACTION_RESUME -> { _isPaused.value = false; updateNotification(stateLabel(_timerState.value?.workoutState ?: WorkoutState.READY)) }
+            ACTION_RESET -> resetWorkout()
             ACTION_START -> {
                 sessionId = intent.getLongExtra(EXTRA_SESSION_ID, -1)
                 readySeconds = intent.getIntExtra(EXTRA_READY_SECONDS, 30)
@@ -95,6 +104,14 @@ class WorkoutTimerService : Service() {
             }
         }
         return START_NOT_STICKY
+    }
+
+    private fun resetWorkout() {
+        timerJob?.cancel()
+        _isPaused.value = false
+        elapsedSeconds = 0
+        startForegroundCompat(buildNotification("운동 준비 중..."))
+        startTimer()
     }
 
     private fun startTimer() {
@@ -147,13 +164,19 @@ class WorkoutTimerService : Service() {
         updateNotification(stateLabel(state))
 
         val startTime = System.currentTimeMillis()
-        val endTime = startTime + (totalSeconds * 1000L)
+        var endTime = startTime + (totalSeconds * 1000L)
         var lastRemaining = totalSeconds
 
         while (true) {
+            // 일시정지 중이면 endTime을 연장하며 대기
+            while (_isPaused.value) {
+                delay(100)
+                endTime += 100
+            }
+
             val now = System.currentTimeMillis()
             val remaining = ((endTime - now + 999) / 1000).toInt().coerceAtLeast(0)
-            
+
             if (remaining != lastRemaining || now == startTime) {
                 val round = if (state == WorkoutState.RUNNING || state == WorkoutState.REST) currentRoundFromElapsed() else 1
                 _timerState.value = TimerState(
@@ -163,7 +186,7 @@ class WorkoutTimerService : Service() {
                     totalRounds = repeatCount,
                     elapsedSeconds = elapsedSeconds
                 )
-                
+
                 WearableManager.sendWorkoutStatus(this@WorkoutTimerService, state, remaining, round, repeatCount)
 
                 if (remaining == 10 && lastRemaining > 10 && state != WorkoutState.DONE) {
@@ -171,7 +194,7 @@ class WorkoutTimerService : Service() {
                     emitBotMessage(chat, tts, state)
                     ttsManager.speak(tts)
                 }
-                
+
                 if (remaining < lastRemaining) {
                     elapsedSeconds++
                 }
@@ -179,7 +202,7 @@ class WorkoutTimerService : Service() {
             }
 
             if (now >= endTime) break
-            delay(100) // Check more frequently for sub-second accuracy
+            delay(100)
         }
     }
 

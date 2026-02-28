@@ -122,6 +122,29 @@ class ChatViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    val isTimerPaused = WorkoutTimerService.isPaused
+
+    fun pauseWorkout() {
+        val intent = Intent(getApplication(), WorkoutTimerService::class.java).apply {
+            action = WorkoutTimerService.ACTION_PAUSE
+        }
+        getApplication<Application>().startService(intent)
+    }
+
+    fun resumeWorkout() {
+        val intent = Intent(getApplication(), WorkoutTimerService::class.java).apply {
+            action = WorkoutTimerService.ACTION_RESUME
+        }
+        getApplication<Application>().startService(intent)
+    }
+
+    fun resetWorkout() {
+        val intent = Intent(getApplication(), WorkoutTimerService::class.java).apply {
+            action = WorkoutTimerService.ACTION_RESET
+        }
+        getApplication<Application>().startService(intent)
+    }
+
     fun stopWorkout() {
         val intent = Intent(getApplication(), WorkoutTimerService::class.java).apply {
             action = WorkoutTimerService.ACTION_STOP

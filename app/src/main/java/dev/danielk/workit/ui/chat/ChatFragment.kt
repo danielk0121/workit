@@ -11,7 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.chip.Chip
+import android.graphics.Color
+import android.util.TypedValue
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.lifecycle.asLiveData
 import dev.danielk.workit.R
 import dev.danielk.workit.databinding.FragmentChatBinding
 import dev.danielk.workit.model.WorkoutState
@@ -48,6 +52,7 @@ class ChatFragment : Fragment() {
         setupInput()
         setupMenu()
         setupBackPress()
+        setupTimerControls()
 
         binding.toolbar.setNavigationOnClickListener {
             handleBackPress()
@@ -156,12 +161,36 @@ class ChatFragment : Fragment() {
 
     private fun updateQuickReactionChips(reactions: List<String>) {
         binding.chipGroupReactions.removeAllViews()
+        val dp8 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics).toInt()
+        val dp4 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, resources.displayMetrics).toInt()
         reactions.forEach { reaction ->
-            val chip = Chip(requireContext()).apply {
+            val badge = TextView(requireContext()).apply {
                 text = reaction
+                textSize = 13f
+                setTextColor(Color.WHITE)
+                setBackgroundResource(R.drawable.bg_reaction_badge)
+                setPadding(dp8, dp4, dp8, dp4)
+                val lp = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply { setMargins(0, 0, 0, dp4) }
+                layoutParams = lp
                 setOnClickListener { viewModel.sendQuickReaction(reaction) }
             }
-            binding.chipGroupReactions.addView(chip)
+            binding.chipGroupReactions.addView(badge)
+        }
+    }
+
+    private fun setupTimerControls() {
+        viewModel.isTimerPaused.asLiveData().observe(viewLifecycleOwner) { paused ->
+            binding.btnPauseResume.text = if (paused) "▶" else "⏸"
+        }
+        binding.btnPauseResume.setOnClickListener {
+            if (viewModel.isTimerPaused.value) viewModel.resumeWorkout()
+            else viewModel.pauseWorkout()
+        }
+        binding.btnReset.setOnClickListener {
+            viewModel.resetWorkout()
         }
     }
 

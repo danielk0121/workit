@@ -194,6 +194,23 @@
     - 목록에서 운동 시작 시각을 한눈에 확인 가능
     - 빌드 확인: `./gradlew assembleDebug` 성공
 
+- 2026-03-01 19:55:00 (+09:00)
+  - [x] 페이즈5 기능 추가: 채팅 타이머 일시중단/초기화 버튼 추가
+    - `WorkoutTimerService`에 ACTION_PAUSE, ACTION_RESUME, ACTION_RESET 추가
+    - `isPaused` StateFlow로 일시정지 상태 공유, `runPhase` 루프에서 일시정지 중 endTime 연장 처리
+    - `ChatViewModel`에 pauseWorkout(), resumeWorkout(), resetWorkout() 메서드 추가
+    - `fragment_chat.xml` 타이머 바에 ⏸/▶ 토글 버튼과 ↩ 초기화 버튼 추가
+    - `ChatFragment`에서 isPaused 상태 관찰하여 버튼 텍스트 전환
+    - 빌드 확인: `./gradlew assembleDebug` 성공
+
+- 2026-03-01 19:40:00 (+09:00)
+  - [x] 페이즈5 개선: 채팅 빠른 입력 버튼 우측 하단 뱃지 형태로 배치
+    - `fragment_chat.xml` 레이아웃 재구성: 메시지 + 뱃지를 FrameLayout으로 오버레이
+    - `chip_group_reactions`를 ChipGroup에서 LinearLayout(세로, end|bottom 정렬)으로 변경
+    - `bg_reaction_badge.xml` 드로어블 추가 (녹색 원형 뱃지)
+    - `ChatFragment.updateQuickReactionChips()`: Chip 대신 TextView 뱃지 스타일로 변경
+    - 빌드 확인: `./gradlew assembleDebug` 성공
+
 - 2026-03-01 19:25:00 (+09:00)
   - [x] 페이즈5 개선: 홈 목록 전체/월 보기 및 날짜 정렬 기능 추가
     - `HomeViewModel`에 `filterMonth`(MutableStateFlow), `sortDescending`(MutableStateFlow) 추가
