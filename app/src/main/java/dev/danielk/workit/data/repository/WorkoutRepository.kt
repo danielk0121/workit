@@ -29,6 +29,10 @@ class WorkoutRepository(context: Context) {
         sessionDao.updateCompletion(id, true, durationSeconds)
     }
 
+    suspend fun updateSessionTitle(id: Long, title: String) {
+        sessionDao.updateTitle(id, title)
+    }
+
     suspend fun deleteSession(session: WorkoutSession) {
         sessionDao.delete(session)
     }

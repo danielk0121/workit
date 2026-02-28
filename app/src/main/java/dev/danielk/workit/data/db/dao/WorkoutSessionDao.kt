@@ -27,4 +27,7 @@ interface WorkoutSessionDao {
 
     @Query("UPDATE workout_sessions SET isCompleted = :completed, totalDurationSeconds = :duration WHERE id = :id")
     suspend fun updateCompletion(id: Long, completed: Boolean, duration: Int)
+
+    @Query("UPDATE workout_sessions SET title = :title WHERE id = :id")
+    suspend fun updateTitle(id: Long, title: String)
 }

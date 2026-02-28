@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
+import dev.danielk.workit.R
 import dev.danielk.workit.databinding.FragmentChatBinding
 import dev.danielk.workit.model.WorkoutState
 
@@ -45,6 +46,7 @@ class ChatFragment : Fragment() {
 
         observeViewModel()
         setupInput()
+        setupMenu()
 
         binding.toolbar.setNavigationOnClickListener {
             if (viewModel.isWorkoutActive.value == true) {
@@ -61,6 +63,34 @@ class ChatFragment : Fragment() {
                 findNavController().popBackStack()
             }
         }
+    }
+
+    private fun setupMenu() {
+        binding.toolbar.inflateMenu(R.menu.menu_chat)
+        binding.toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_edit_title -> {
+                    showEditTitleDialog()
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    private fun showEditTitleDialog() {
+        val editText = android.widget.EditText(requireContext()).apply {
+            setText(viewModel.sessionTitle.value)
+            setSelection(text.length)
+        }
+        AlertDialog.Builder(requireContext())
+            .setTitle("제목 수정")
+            .setView(editText)
+            .setPositiveButton("저장") { _, _ ->
+                viewModel.updateSessionTitle(editText.text.toString())
+            }
+            .setNegativeButton("취소", null)
+            .show()
     }
 
     private fun observeViewModel() {

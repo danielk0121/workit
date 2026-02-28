@@ -97,6 +97,14 @@ class ChatViewModel(application: Application) : AndroidViewModel(application) {
         }.launchIn(viewModelScope)
     }
 
+    fun updateSessionTitle(newTitle: String) {
+        if (newTitle.isBlank()) return
+        sessionTitle.postValue(newTitle)
+        viewModelScope.launch {
+            repository.updateSessionTitle(sessionId, newTitle)
+        }
+    }
+
     fun startWorkout() {
         isWorkoutActive.value = true
         startTimeMillis = System.currentTimeMillis()
