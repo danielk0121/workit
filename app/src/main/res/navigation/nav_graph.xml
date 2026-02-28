@@ -16,7 +16,16 @@
         <action
             android:id="@+id/action_home_to_chat"
             app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_home_to_settings"
+            app:destination="@id/settingsFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="dev.danielk.workit.ui.settings.SettingsFragment"
+        android:label="설정"
+        tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/workoutSetupFragment"

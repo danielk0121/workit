@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="green_primary">#39D353</color>
+    <color name="green_dark">#26A641</color>
+    <color name="green_light">#0E4429</color>
+    <color name="yellow_accent">#F0B72F</color>
+    <color name="red_accent">#F85149</color>
+    <color name="gray_empty">#161B22</color>
+    <color name="bg_surface">#0D1117</color>
+    <color name="bg_bot_bubble">#161B22</color>
+    <color name="text_primary">#C9D1D9</color>
+    <color name="text_secondary">#8B949E</color>
+    <color name="white">#0D1117</color>
+    <color name="black">#FFFFFF</color>
+</resources>

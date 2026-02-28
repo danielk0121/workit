@@ -42,6 +42,17 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.toolbar.inflateMenu(R.menu.menu_home)
+        binding.toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_settings -> {
+                    findNavController().navigate(R.id.action_home_to_settings)
+                    true
+                }
+                else -> false
+            }
+        }
+
         binding.recyclerSessions.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerSessions.adapter = adapter
 
