@@ -49,6 +49,14 @@ class HomeFragment : Fragment() {
                     findNavController().navigate(R.id.action_home_to_profile)
                     true
                 }
+                R.id.menu_filter -> {
+                    showFilterDialog()
+                    true
+                }
+                R.id.menu_sort -> {
+                    toggleSort()
+                    true
+                }
                 else -> false
             }
         }
@@ -56,7 +64,7 @@ class HomeFragment : Fragment() {
         binding.recyclerSessions.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerSessions.adapter = adapter
 
-        viewModel.sessions.observe(viewLifecycleOwner) { sessions ->
+        viewModel.filteredSessions.observe(viewLifecycleOwner) { sessions ->
             adapter.submitList(sessions)
             binding.tvEmpty.visibility = if (sessions.isEmpty()) View.VISIBLE else View.GONE
         }
@@ -66,6 +74,27 @@ class HomeFragment : Fragment() {
         }
 
         setupGrassPreview()
+    }
+
+    private fun toggleSort() {
+        viewModel.sortDescending.value = !viewModel.sortDescending.value
+        val label = if (viewModel.sortDescending.value) "최신순으로 정렬됩니다" else "오래된 순으로 정렬됩니다"
+        android.widget.Toast.makeText(requireContext(), label, android.widget.Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showFilterDialog() {
+        val months = listOf("전체") + viewModel.getAvailableMonths()
+        val currentFilter = viewModel.filterMonth.value
+        val currentIndex = if (currentFilter == null) 0 else months.indexOf(currentFilter).takeIf { it >= 0 } ?: 0
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("월 선택")
+            .setSingleChoiceItems(months.toTypedArray(), currentIndex) { dialog, which ->
+                viewModel.filterMonth.value = if (which == 0) null else months[which]
+                dialog.dismiss()
+            }
+            .setNegativeButton("취소", null)
+            .show()
     }
 
     private fun setupGrassPreview() {

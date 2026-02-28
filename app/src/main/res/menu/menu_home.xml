@@ -2,6 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/menu_filter"
+        android:icon="@android:drawable/ic_menu_month"
+        android:title="월 선택"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_sort"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="정렬"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/menu_profile"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="프로필"

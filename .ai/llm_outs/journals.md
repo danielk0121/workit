@@ -194,6 +194,15 @@
     - 목록에서 운동 시작 시각을 한눈에 확인 가능
     - 빌드 확인: `./gradlew assembleDebug` 성공
 
+- 2026-03-01 19:25:00 (+09:00)
+  - [x] 페이즈5 개선: 홈 목록 전체/월 보기 및 날짜 정렬 기능 추가
+    - `HomeViewModel`에 `filterMonth`(MutableStateFlow), `sortDescending`(MutableStateFlow) 추가
+    - `combine` Flow로 필터링 + 정렬된 `filteredSessions`를 LiveData로 노출
+    - `HomeFragment`에서 `filteredSessions`를 관찰하도록 변경
+    - `menu_home.xml`에 월 선택(filter), 정렬(sort) 메뉴 아이템 추가
+    - 월 선택 다이얼로그: 전체 + 월 목록 SingleChoice, 정렬 토글: 최신순/오래된 순
+    - 빌드 확인: `./gradlew assembleDebug` 성공
+
 
 
 
