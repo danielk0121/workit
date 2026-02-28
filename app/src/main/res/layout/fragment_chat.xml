@@ -16,26 +16,27 @@
         app:navigationIcon="@drawable/ic_arrow_back"
         app:titleTextColor="@color/white" />
 
-    <!-- Timer display bar -->
+    <!-- 타이머 대형 표시 영역 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/green_dark"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="8dp">
+        android:orientation="vertical"
+        android:paddingTop="12dp"
+        android:paddingBottom="8dp">
 
+        <!-- 상태 레이블 -->
         <TextView
             android:id="@+id/tv_state_label"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="start"
-            android:paddingStart="16dp"
             android:text="준비 중"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp" />
 
+        <!-- 타이머 숫자 크게 -->
         <TextView
             android:id="@+id/tv_timer"
             android:layout_width="wrap_content"
@@ -43,64 +44,73 @@
             android:fontFamily="monospace"
             android:text="--:--"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="52sp"
             android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_pause_resume"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+        <!-- 컨트롤 버튼 (일시정지/재개, 초기화) -->
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginStart="8dp"
-            android:minWidth="0dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="⏸"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_reset"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginEnd="8dp"
-            android:minWidth="0dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="↩"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_pause_resume"
+                android:layout_width="100dp"
+                android:layout_height="44dp"
+                android:layout_marginEnd="12dp"
+                android:backgroundTint="@color/white"
+                android:minWidth="0dp"
+                android:text="⏸ 일시정지"
+                android:textColor="@color/green_dark"
+                android:textSize="13sp"
+                app:cornerRadius="22dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_reset"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="80dp"
+                android:layout_height="44dp"
+                android:minWidth="0dp"
+                android:text="↩ 초기화"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                app:cornerRadius="22dp"
+                app:strokeColor="@color/white" />
+        </LinearLayout>
     </LinearLayout>
 
-    <!-- Messages + Quick reaction badges overlay -->
-    <FrameLayout
+    <!-- 메시지 영역 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_messages"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:padding="8dp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_messages"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingEnd="72dp"
-            android:padding="8dp" />
+    <!-- 빠른 반응 버튼 (이모지만, 가로 배치, 입력 영역 바로 위) -->
+    <HorizontalScrollView
+        android:id="@+id/scroll_reactions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_surface"
+        android:scrollbars="none"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
 
-        <!-- Quick reaction badge buttons (우측 하단 고정) -->
         <LinearLayout
             android:id="@+id/chip_group_reactions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:orientation="vertical"
-            android:gravity="end" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical" />
+    </HorizontalScrollView>
 
-    </FrameLayout>
-
-    <!-- Text input -->
+    <!-- 텍스트 입력 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

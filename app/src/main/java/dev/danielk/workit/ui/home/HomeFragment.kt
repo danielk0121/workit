@@ -24,14 +24,8 @@ class HomeFragment : Fragment() {
             val action = HomeFragmentDirections.actionHomeToChat(session.id)
             findNavController().navigate(action)
         },
-        onLongClick = { session ->
-            AlertDialog.Builder(requireContext())
-                .setTitle("삭제")
-                .setMessage("'${session.title}'을 삭제할까요?")
-                .setPositiveButton("삭제") { _, _ -> viewModel.deleteSession(session) }
-                .setNegativeButton("취소", null)
-                .show()
-        }
+        onLongClick = { /* 멀티 선택 모드 진입은 adapter 내부에서 처리 */ },
+        onSelectionChanged = { count -> updateSelectionToolbar(count) }
     )
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -45,18 +39,10 @@ class HomeFragment : Fragment() {
         binding.toolbar.inflateMenu(R.menu.menu_home)
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.menu_profile -> {
-                    findNavController().navigate(R.id.action_home_to_profile)
-                    true
-                }
-                R.id.menu_filter -> {
-                    showFilterDialog()
-                    true
-                }
-                R.id.menu_sort -> {
-                    toggleSort()
-                    true
-                }
+                R.id.menu_profile -> { findNavController().navigate(R.id.action_home_to_profile); true }
+                R.id.menu_filter -> { showFilterDialog(); true }
+                R.id.menu_sort -> { toggleSort(); true }
+                R.id.menu_delete_selected -> { deleteSelected(); true }
                 else -> false
             }
         }
@@ -74,6 +60,43 @@ class HomeFragment : Fragment() {
         }
 
         setupGrassPreview()
+    }
+
+    private fun updateSelectionToolbar(count: Int) {
+        val deleteItem = binding.toolbar.menu.findItem(R.id.menu_delete_selected)
+        val filterItem = binding.toolbar.menu.findItem(R.id.menu_filter)
+        val sortItem = binding.toolbar.menu.findItem(R.id.menu_sort)
+        val profileItem = binding.toolbar.menu.findItem(R.id.menu_profile)
+
+        if (count > 0) {
+            binding.toolbar.title = "${count}개 선택됨"
+            deleteItem?.isVisible = true
+            filterItem?.isVisible = false
+            sortItem?.isVisible = false
+            profileItem?.isVisible = false
+            binding.fabNewWorkout.hide()
+        } else {
+            binding.toolbar.title = "워킷 💪"
+            deleteItem?.isVisible = false
+            filterItem?.isVisible = true
+            sortItem?.isVisible = true
+            profileItem?.isVisible = true
+            binding.fabNewWorkout.show()
+            adapter.clearSelection()
+        }
+    }
+
+    private fun deleteSelected() {
+        val ids = adapter.getSelectedIds()
+        AlertDialog.Builder(requireContext())
+            .setTitle("선택 삭제")
+            .setMessage("${ids.size}개의 운동 기록을 삭제할까요?")
+            .setPositiveButton("삭제") { _, _ ->
+                viewModel.deleteSessions(ids)
+                adapter.clearSelection()
+            }
+            .setNegativeButton("취소", null)
+            .show()
     }
 
     private fun toggleSort() {
@@ -98,19 +121,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupGrassPreview() {
-        binding.grassPreview.setWeeksCount(13) // ~3 months
+        binding.grassPreview.setFillWidth(true)
+        binding.grassPreview.setWeeksCount(13)
         viewModel.grassRecords.observe(viewLifecycleOwner) { records ->
             binding.grassPreview.setRecords(records)
             val streak = viewModel.getCurrentStreak(records)
             binding.tvStreakBanner.text = if (streak > 0) "🔥 ${streak}일 연속 운동 중!" else "오늘 운동을 시작해볼까요?"
         }
 
-        // 잔디밭 셀 클릭 → 잔디밭 상세 화면으로 이동
         binding.grassPreview.onDateClick = { _ ->
             findNavController().navigate(R.id.action_home_to_grass)
         }
-
-        // 잔디밭 미리보기 전체 클릭 → 잔디밭 상세 화면으로 이동
         binding.grassPreview.setOnClickListener {
             findNavController().navigate(R.id.action_home_to_grass)
         }

@@ -3,7 +3,6 @@ package dev.danielk.workit
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import dev.danielk.workit.databinding.ActivityMainBinding
 import android.Manifest
 import android.content.pm.PackageManager
@@ -31,16 +30,6 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-
-        binding.bottomNavigation.setupWithNavController(navController)
-
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            val hideBottomNav = destination.id == R.id.workoutSetupFragment ||
-                    destination.id == R.id.chatFragment ||
-                    destination.id == R.id.grassFragment
-            binding.bottomNavigation.visibility =
-                if (hideBottomNav) android.view.View.GONE else android.view.View.VISIBLE
-        }
     }
 
     private fun checkNotificationPermission() {

@@ -161,19 +161,18 @@ class ChatFragment : Fragment() {
 
     private fun updateQuickReactionChips(reactions: List<String>) {
         binding.chipGroupReactions.removeAllViews()
-        val dp8 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics).toInt()
         val dp4 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, resources.displayMetrics).toInt()
+        val dp48 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48f, resources.displayMetrics).toInt()
         reactions.forEach { reaction ->
+            // 이모지만 추출 (첫 번째 문자 또는 이모지 시퀀스)
+            val emoji = reaction.trim().split(" ").firstOrNull() ?: reaction
             val badge = TextView(requireContext()).apply {
-                text = reaction
-                textSize = 13f
+                text = emoji
+                textSize = 24f
+                gravity = android.view.Gravity.CENTER
                 setTextColor(Color.WHITE)
                 setBackgroundResource(R.drawable.bg_reaction_badge)
-                setPadding(dp8, dp4, dp8, dp4)
-                val lp = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply { setMargins(0, 0, 0, dp4) }
+                val lp = LinearLayout.LayoutParams(dp48, dp48).apply { setMargins(dp4, 0, dp4, 0) }
                 layoutParams = lp
                 setOnClickListener { viewModel.sendQuickReaction(reaction) }
             }
@@ -183,7 +182,7 @@ class ChatFragment : Fragment() {
 
     private fun setupTimerControls() {
         viewModel.isTimerPaused.asLiveData().observe(viewLifecycleOwner) { paused ->
-            binding.btnPauseResume.text = if (paused) "▶" else "⏸"
+            binding.btnPauseResume.text = if (paused) "▶ 재개" else "⏸ 일시정지"
         }
         binding.btnPauseResume.setOnClickListener {
             if (viewModel.isTimerPaused.value) viewModel.resumeWorkout()

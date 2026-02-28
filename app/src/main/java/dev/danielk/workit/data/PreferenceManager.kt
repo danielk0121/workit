@@ -25,6 +25,10 @@ class PreferenceManager(context: Context) {
         get() = prefs.getInt(KEY_MONTHLY_GOAL, 10)
         set(value) = prefs.edit().putInt(KEY_MONTHLY_GOAL, value).apply()
 
+    var isSampleDataInserted: Boolean
+        get() = prefs.getBoolean(KEY_SAMPLE_DATA_INSERTED, false)
+        set(value) = prefs.edit().putBoolean(KEY_SAMPLE_DATA_INSERTED, value).apply()
+
     fun applySettings() {
         val mode = if (isDarkMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
         AppCompatDelegate.setDefaultNightMode(mode)
@@ -36,6 +40,7 @@ class PreferenceManager(context: Context) {
         private const val KEY_DARK_MODE = "key_dark_mode"
         private const val KEY_REMINDER_ENABLED = "key_reminder_enabled"
         private const val KEY_MONTHLY_GOAL = "key_monthly_goal"
+        private const val KEY_SAMPLE_DATA_INSERTED = "key_sample_data_inserted"
         
         @Volatile private var INSTANCE: PreferenceManager? = null
         fun getInstance(context: Context): PreferenceManager {

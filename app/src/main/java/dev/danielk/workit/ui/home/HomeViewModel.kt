@@ -45,8 +45,13 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     val allSessions = repository.getAllSessions().asLiveData()
 
     fun deleteSession(session: WorkoutSession) {
+        viewModelScope.launch { repository.deleteSession(session) }
+    }
+
+    fun deleteSessions(ids: Set<Long>) {
         viewModelScope.launch {
-            repository.deleteSession(session)
+            val list = allSessions.value ?: return@launch
+            list.filter { it.id in ids }.forEach { repository.deleteSession(it) }
         }
     }
 

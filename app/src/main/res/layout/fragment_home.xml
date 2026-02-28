@@ -36,20 +36,9 @@
 
             <dev.danielk.workit.ui.grass.GrassView
                 android:id="@+id/grass_preview"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/bg_bubble_bot"
                 android:padding="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="4dp"
-                android:text="최근 3개월"
-                android:textColor="@color/green_light"
-                android:textSize="10sp" />
 
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
