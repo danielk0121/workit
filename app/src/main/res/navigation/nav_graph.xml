@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_home_to_profile"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_home_to_grass"
+            app:destination="@id/grassFragment" />
     </fragment>
 
     <fragment

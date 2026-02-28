@@ -194,6 +194,14 @@
     - 목록에서 운동 시작 시각을 한눈에 확인 가능
     - 빌드 확인: `./gradlew assembleDebug` 성공
 
+- 2026-03-01 20:10:00 (+09:00)
+  - [x] 페이즈5 개선: 메인화면 잔디밭 탭 삭제 및 홈 잔디밭 상세 보기 연결
+    - `bottom_nav_menu.xml`에서 잔디밭 탭 항목 제거 (홈 탭만 남김)
+    - `nav_graph.xml`에 `action_home_to_grass` 추가
+    - `HomeFragment` 잔디밭 셀/전체 클릭 시 `GrassFragment`(상세 보기)로 이동
+    - `MainActivity`에서 grassFragment 방문 시 바텀 네비 숨김 처리
+    - 빌드 확인: `./gradlew assembleDebug` 성공
+
 - 2026-03-01 19:55:00 (+09:00)
   - [x] 페이즈5 기능 추가: 채팅 타이머 일시중단/초기화 버튼 추가
     - `WorkoutTimerService`에 ACTION_PAUSE, ACTION_RESUME, ACTION_RESET 추가

@@ -4,8 +4,4 @@
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_home"
         android:title="@string/nav_home" />
-    <item
-        android:id="@+id/grassFragment"
-        android:icon="@drawable/ic_grass"
-        android:title="@string/nav_grass" />
 </menu>

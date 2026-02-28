@@ -36,7 +36,8 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val hideBottomNav = destination.id == R.id.workoutSetupFragment ||
-                    destination.id == R.id.chatFragment
+                    destination.id == R.id.chatFragment ||
+                    destination.id == R.id.grassFragment
             binding.bottomNavigation.visibility =
                 if (hideBottomNav) android.view.View.GONE else android.view.View.VISIBLE
         }

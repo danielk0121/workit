@@ -105,12 +105,14 @@ class HomeFragment : Fragment() {
             binding.tvStreakBanner.text = if (streak > 0) "🔥 ${streak}일 연속 운동 중!" else "오늘 운동을 시작해볼까요?"
         }
 
-        binding.grassPreview.onDateClick = { date ->
-            val record = viewModel.grassRecords.value?.find { it.date == date }
-            if (record != null && record.sessionId > 0) {
-                val action = HomeFragmentDirections.actionHomeToChat(record.sessionId)
-                findNavController().navigate(action)
-            }
+        // 잔디밭 셀 클릭 → 잔디밭 상세 화면으로 이동
+        binding.grassPreview.onDateClick = { _ ->
+            findNavController().navigate(R.id.action_home_to_grass)
+        }
+
+        // 잔디밭 미리보기 전체 클릭 → 잔디밭 상세 화면으로 이동
+        binding.grassPreview.setOnClickListener {
+            findNavController().navigate(R.id.action_home_to_grass)
         }
     }
 
