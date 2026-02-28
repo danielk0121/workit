@@ -31,10 +31,14 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     private val _isDarkMode = MutableLiveData<Boolean>()
     val isDarkMode: LiveData<Boolean> = _isDarkMode
 
+    private val _isReminderEnabled = MutableLiveData<Boolean>()
+    val isReminderEnabled: LiveData<Boolean> = _isReminderEnabled
+
     init {
         loadProfileData()
         _ttsStyle.value = prefs.ttsStyle
         _isDarkMode.value = prefs.isDarkMode
+        _isReminderEnabled.value = prefs.isReminderEnabled
     }
 
     private fun loadProfileData() {
@@ -63,5 +67,15 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
         _isDarkMode.value = enabled
         prefs.isDarkMode = enabled
         prefs.applySettings()
+    }
+
+    fun setReminderEnabled(enabled: Boolean) {
+        _isReminderEnabled.value = enabled
+        prefs.isReminderEnabled = enabled
+        if (enabled) {
+            dev.danielk.workit.service.ReminderManager.scheduleDailyReminder(getApplication())
+        } else {
+            dev.danielk.workit.service.ReminderManager.cancelDailyReminder(getApplication())
+        }
     }
 }

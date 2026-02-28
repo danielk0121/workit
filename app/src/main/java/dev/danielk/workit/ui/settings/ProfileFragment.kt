@@ -67,6 +67,12 @@ class ProfileFragment : Fragment() {
                 binding.switchDarkMode.isChecked = isEnabled
             }
         }
+
+        viewModel.isReminderEnabled.observe(viewLifecycleOwner) { isEnabled ->
+            if (binding.switchReminder.isChecked != isEnabled) {
+                binding.switchReminder.isChecked = isEnabled
+            }
+        }
     }
 
     private fun setupListeners() {
@@ -82,6 +88,10 @@ class ProfileFragment : Fragment() {
 
         binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setDarkMode(isChecked)
+        }
+
+        binding.switchReminder.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.setReminderEnabled(isChecked)
         }
     }
 

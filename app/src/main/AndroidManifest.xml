@@ -29,6 +29,10 @@
             android:foregroundServiceType="health"
             android:exported="false" />
 
+        <receiver
+            android:name=".service.ReminderReceiver"
+            android:exported="false" />
+
     </application>
 
 </manifest>

@@ -87,3 +87,11 @@
     - '😤 힘들어' 및 '💪 괜찮아' 반응 횟수에 따른 맞춤형 격려 요약 메시지 발송 기능 구현
     - `addMessage`를 메인 스레드 즉시 반영(`value =`) 방식으로 수정하여 요약 시점의 데이터 무결성 확보
     - 빌드 확인 및 요약 메시지 생성 로직 검증 완료
+
+- 2026-03-01 14:35:00 (+09:00)
+  - [x] 기능 구현: 매일 운동 리마인더 알림 (선택적)
+    - `PreferenceManager`에 리마인더 활성화 상태 저장 로직 추가
+    - `fragment_profile.xml`에 리마인더 설정 스위치 UI 추가 및 `ProfileFragment` 바인딩
+    - `AlarmManager` 및 `BroadcastReceiver`를 활용한 `ReminderManager` 구현 (매일 오후 8시 알림)
+    - `AndroidManifest.xml`에 `ReminderReceiver` 등록 및 `POST_NOTIFICATIONS` 권한 확인
+    - 빌드 확인 및 설정 스위치 연동 로직 검증 완료
