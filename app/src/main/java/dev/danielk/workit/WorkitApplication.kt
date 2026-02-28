@@ -9,6 +9,7 @@ class WorkitApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
+        dev.danielk.workit.data.PreferenceManager.getInstance(this).applySettings()
     }
 
     private fun createNotificationChannel() {

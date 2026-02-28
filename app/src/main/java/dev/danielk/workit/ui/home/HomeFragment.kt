@@ -45,8 +45,8 @@ class HomeFragment : Fragment() {
         binding.toolbar.inflateMenu(R.menu.menu_home)
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.menu_settings -> {
-                    findNavController().navigate(R.id.action_home_to_settings)
+                R.id.menu_profile -> {
+                    findNavController().navigate(R.id.action_home_to_profile)
                     true
                 }
                 else -> false

@@ -17,15 +17,15 @@
             android:id="@+id/action_home_to_chat"
             app:destination="@id/chatFragment" />
         <action
-            android:id="@+id/action_home_to_settings"
-            app:destination="@id/settingsFragment" />
+            android:id="@+id/action_home_to_profile"
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="dev.danielk.workit.ui.settings.SettingsFragment"
-        android:label="설정"
-        tools:layout="@layout/fragment_settings" />
+        android:id="@+id/profileFragment"
+        android:name="dev.danielk.workit.ui.settings.ProfileFragment"
+        android:label="프로필"
+        tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/workoutSetupFragment"

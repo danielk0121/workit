@@ -59,3 +59,11 @@
     - 역대 최고 운동 시간 및 최다 라운드 기록을 조회하는 DAO 쿼리 추가
     - `WorkoutRepository`의 `updateGrassAfterWorkout`에서 현재 기록과 역대 최고 기록을 비교하여 `BEST` 등급 부여
     - 미사용 변수(`existing`) 제거 및 최종 빌드 검증 완료
+
+- 2026-03-01 13:00:00 (+09:00)
+  - [x] 기능 구현: 프로필 화면 (스트릭, 배지, TTS 기본 스타일 설정)
+    - `SettingsFragment`를 `ProfileFragment`로 전면 개편하여 사용자 프로필 중심의 UI 구축
+    - `ProfileViewModel` 및 `BadgeAdapter` 구현으로 스트릭 정보 및 배지 목록(더미 데이터) 시각화
+    - `PreferenceManager`를 도입하여 `TtsStyle` 및 다크 모드 설정을 `SharedPreferences`에 영구 저장 및 앱 실행 시 자동 적용
+    - `HomeFragment` 툴바 메뉴와 내비게이션 경로(`nav_graph.xml`)를 '프로필'로 업데이트
+    - 빌드 확인 및 TTS 스타일 설정/테마 전환 로직 최종 검증 완료
