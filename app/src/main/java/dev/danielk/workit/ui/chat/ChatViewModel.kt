@@ -46,13 +46,11 @@ class ChatViewModel(application: Application) : AndroidViewModel(application) {
             } else {
                 // Viewing historical session: load messages from DB
                 repository.getMessages(sessionId).onEach { list ->
-                    if (!isWorkoutActive.value!!) {
+                    if (isWorkoutActive.value == false) {
                         messages.postValue(list)
-                        if (session?.isCompleted == true) {
-                            currentState.postValue(WorkoutState.DONE)
-                            quickReactions.postValue(BotScript.getQuickReactions(WorkoutState.DONE))
-                            isInputEnabled.postValue(true)
-                        }
+                        currentState.postValue(WorkoutState.DONE)
+                        quickReactions.postValue(BotScript.getQuickReactions(WorkoutState.DONE))
+                        isInputEnabled.postValue(true)
                     }
                 }.launchIn(viewModelScope)
             }
@@ -172,12 +170,6 @@ class ChatViewModel(application: Application) : AndroidViewModel(application) {
             val elapsed = ((System.currentTimeMillis() - startTimeMillis) / 1000).toInt()
             repository.completeSession(sessionId, elapsed)
             repository.updateGrassAfterWorkout(sessionId, true)
-
-            // Check streak for special message
-            val streak = session?.let {
-                // rough streak count from grass record
-                0
-            } ?: 0
         }
     }
 
