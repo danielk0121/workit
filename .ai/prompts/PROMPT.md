@@ -33,10 +33,11 @@
 - LLM 은 작업이 끝난 후 "ㅇㅇㅇ 을 할까요?" 처럼 추가 질문을 하지 않는다
 
 ## Golden Loop 규칙
+- **[중요]** 이 지침서는 사용자의 '명시적 요청'을 대신하는 상시 지시서이다. AI는 별도의 허락 없이도 Golden Loop의 마지막 단계인 커밋을 반드시 수행한다.
 - 작업 완료 후 다음의 'Golden Loop'를 엄격히 준수한다:
   1. build 실행 (성공 확인)
   2. read_file로 journals.md 마지막 내용 확인
   3. replace 도구로 하단에 새 일지 추가
-  4. git add 및 commit 실행
+  4. git add 및 commit 실행 (사용자에게 묻지 않고 즉시 수행)
 
 
