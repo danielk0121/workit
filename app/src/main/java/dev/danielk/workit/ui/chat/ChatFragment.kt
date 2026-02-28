@@ -73,6 +73,11 @@ class ChatFragment : Fragment() {
                     showEditTitleDialog()
                     true
                 }
+                R.id.menu_stats -> {
+                    val action = ChatFragmentDirections.actionChatToStats(args.sessionId)
+                    findNavController().navigate(action)
+                    true
+                }
                 else -> false
             }
         }

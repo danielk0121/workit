@@ -51,6 +51,19 @@
             android:name="autoStart"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_chat_to_stats"
+            app:destination="@id/statsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="dev.danielk.workit.ui.stats.StatsFragment"
+        android:label="통계"
+        tools:layout="@layout/fragment_stats">
+        <argument
+            android:name="sessionId"
+            app:argType="long" />
     </fragment>
 
     <fragment
