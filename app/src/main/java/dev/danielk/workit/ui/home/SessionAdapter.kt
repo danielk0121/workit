@@ -22,7 +22,7 @@ class SessionAdapter(
 
         fun bind(session: WorkoutSession) {
             binding.tvTitle.text = session.title
-            binding.tvDate.text = SimpleDateFormat("MM월 dd일", Locale.KOREAN)
+            binding.tvDate.text = SimpleDateFormat("MM월 dd일 HH:mm", Locale.KOREAN)
                 .format(Date(session.date))
             binding.tvStatus.text = if (session.isCompleted) "✅ 완주" else "⚠️ 중단"
             binding.tvDuration.text = if (session.totalDurationSeconds > 0)

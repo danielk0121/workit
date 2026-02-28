@@ -188,6 +188,12 @@
     - 해결: `WearableManager.sendWorkoutStatus()` 내부를 try-catch로 감싸 워치 미연결 기기에서도 정상 동작하도록 수정
     - 빌드 확인: `./gradlew assembleDebug` 성공
 
+- 2026-03-01 19:10:00 (+09:00)
+  - [x] 페이즈5 개선: 홈 목록 타이틀에 시작 시분 표시
+    - `SessionAdapter`의 날짜 포맷을 `"MM월 dd일"` → `"MM월 dd일 HH:mm"`으로 변경
+    - 목록에서 운동 시작 시각을 한눈에 확인 가능
+    - 빌드 확인: `./gradlew assembleDebug` 성공
+
 
 
 
