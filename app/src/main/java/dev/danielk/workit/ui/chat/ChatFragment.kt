@@ -47,21 +47,34 @@ class ChatFragment : Fragment() {
         observeViewModel()
         setupInput()
         setupMenu()
+        setupBackPress()
 
         binding.toolbar.setNavigationOnClickListener {
-            if (viewModel.isWorkoutActive.value == true) {
-                AlertDialog.Builder(requireContext())
-                    .setTitle("운동 중단")
-                    .setMessage("운동을 중단하고 나가시겠어요?")
-                    .setPositiveButton("중단") { _, _ ->
-                        viewModel.stopWorkout()
-                        findNavController().popBackStack()
-                    }
-                    .setNegativeButton("계속", null)
-                    .show()
-            } else {
-                findNavController().popBackStack()
+            handleBackPress()
+        }
+    }
+
+    private fun setupBackPress() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : androidx.activity.OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                handleBackPress()
             }
+        })
+    }
+
+    private fun handleBackPress() {
+        if (viewModel.isWorkoutActive.value == true) {
+            AlertDialog.Builder(requireContext())
+                .setTitle("운동 중단")
+                .setMessage("운동을 중단하고 나가시겠어요?")
+                .setPositiveButton("중단") { _, _ ->
+                    viewModel.stopWorkout()
+                    findNavController().popBackStack()
+                }
+                .setNegativeButton("계속", null)
+                .show()
+        } else {
+            findNavController().popBackStack()
         }
     }
 
