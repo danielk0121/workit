@@ -95,3 +95,11 @@
     - `AlarmManager` 및 `BroadcastReceiver`를 활용한 `ReminderManager` 구현 (매일 오후 8시 알림)
     - `AndroidManifest.xml`에 `ReminderReceiver` 등록 및 `POST_NOTIFICATIONS` 권한 확인
     - 빌드 확인 및 설정 스위치 연동 로직 검증 완료
+
+- 2026-03-01 14:50:00 (+09:00)
+  - [x] 기능 구현: 음악 볼륨 덕킹 (TTS 발화 시 음악 자동으로 낮추기)
+    - `TtsManager`에 `AudioManager` 및 `AudioFocusRequest`를 통한 오디오 포커스 제어 로직 도입
+    - TTS 발화 시작 시 `AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK`을 요청하여 배경 음악 볼륨을 자동으로 낮춤
+    - `UtteranceProgressListener`를 등록하여 TTS 발화 완료 시 오디오 포커스를 즉시 해제하도록 구현
+    - Android 8.0(Oreo) 이상(`AudioFocusRequest`) 및 이하 버전 호환성 확보
+    - 빌드 확인 및 오디오 포커스 전환 로직 검증 완료
