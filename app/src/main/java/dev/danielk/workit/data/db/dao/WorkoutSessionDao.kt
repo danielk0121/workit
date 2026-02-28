@@ -30,4 +30,10 @@ interface WorkoutSessionDao {
 
     @Query("UPDATE workout_sessions SET title = :title WHERE id = :id")
     suspend fun updateTitle(id: Long, title: String)
+
+    @Query("SELECT MAX(totalDurationSeconds) FROM workout_sessions WHERE isCompleted = 1")
+    suspend fun getMaxDuration(): Int?
+
+    @Query("SELECT MAX(repeatCount) FROM workout_sessions WHERE isCompleted = 1")
+    suspend fun getMaxRepeatCount(): Int?
 }

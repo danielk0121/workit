@@ -62,11 +62,18 @@ class WorkoutRepository(context: Context) {
 
     suspend fun updateGrassAfterWorkout(sessionId: Long, isCompleted: Boolean) {
         val dateStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        val existing = grassDao.getByDate(dateStr)
         val currentStreak = calculateCurrentStreak(dateStr)
+        val currentSession = sessionDao.getSessionById(sessionId)
+        
+        val maxDuration = sessionDao.getMaxDuration() ?: 0
+        val maxRepeat = sessionDao.getMaxRepeatCount() ?: 0
+        
+        val isBest = isCompleted && currentSession != null && 
+                (currentSession.totalDurationSeconds >= maxDuration || currentSession.repeatCount >= maxRepeat)
+
         val grade = when {
             !isCompleted -> GrassGrade.PARTIAL
-            existing?.grade == GrassGrade.COMPLETE -> GrassGrade.BEST
+            isBest -> GrassGrade.BEST
             else -> GrassGrade.COMPLETE
         }
         grassDao.upsert(
