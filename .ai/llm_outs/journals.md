@@ -80,3 +80,10 @@
     - `ProfileViewModel`에서 `WorkoutRepository`의 실데이터를 조회하여 배지 해금 상태 계산 로직 구현
     - `BadgeAdapter`가 새 `Badge` 모델을 참조하도록 수정 및 잠금 상태 스타일링(투명도) 적용
     - `getMaxStreak` 및 `getTotalWorkoutDays` 기반의 조건부 해금 로직 검증 완료
+
+- 2026-03-01 14:15:00 (+09:00)
+  - [x] 기능 구현: 운동 완료 시 AI 챗봇 자동 요약
+    - `ChatViewModel`의 `onWorkoutComplete` 시점에 사용자 반응(USER_QUICK) 분석 로직 추가
+    - '😤 힘들어' 및 '💪 괜찮아' 반응 횟수에 따른 맞춤형 격려 요약 메시지 발송 기능 구현
+    - `addMessage`를 메인 스레드 즉시 반영(`value =`) 방식으로 수정하여 요약 시점의 데이터 무결성 확보
+    - 빌드 확인 및 요약 메시지 생성 로직 검증 완료

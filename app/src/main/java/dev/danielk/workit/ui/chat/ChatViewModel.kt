@@ -160,7 +160,7 @@ class ChatViewModel(application: Application) : AndroidViewModel(application) {
     private fun addMessage(message: ChatMessage) {
         val current = messages.value.orEmpty().toMutableList()
         current.add(message)
-        messages.postValue(current)
+        messages.value = current
         messageBuffer.add(message)
         viewModelScope.launch {
             repository.addMessage(message)
@@ -178,6 +178,26 @@ class ChatViewModel(application: Application) : AndroidViewModel(application) {
             val elapsed = ((System.currentTimeMillis() - startTimeMillis) / 1000).toInt()
             repository.completeSession(sessionId, elapsed)
             repository.updateGrassAfterWorkout(sessionId, true)
+
+            // --- Workout Summary Logic ---
+            val currentMessages = messages.value.orEmpty()
+            val tiredCount = currentMessages.count { it.content == "😤 힘들어" }
+            val cheerCount = currentMessages.count { it.content == "💪 괜찮아" }
+
+            if (tiredCount > 0) {
+                val summaryText = if (cheerCount > 0) {
+                    "오늘 '힘들어'를 ${tiredCount}번이나 누르셨지만, '괜찮아'라고 스스로 다독이며 완주하셨네요! 정말 멋져요! 👍"
+                } else {
+                    "오늘 '힘들어'를 ${tiredCount}번이나 누르셨는데도 끝까지 완주하셨네요! 대단한 정신력이에요! 💪"
+                }
+                addMessage(ChatMessage(
+                    sessionId = sessionId,
+                    type = MessageType.BOT,
+                    content = summaryText,
+                    workoutState = WorkoutState.DONE
+                ))
+            }
+            // -----------------------------
 
             // Check streak for special message
             val streak = repository.getCurrentStreak()
