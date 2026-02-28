@@ -74,6 +74,7 @@ class WorkoutSetupFragment : Fragment() {
     }
 
     private fun bindInputs() {
+        binding.etWorkoutName.setText(viewModel.workoutName.value)
         binding.etReadySeconds.setText(viewModel.readySeconds.value.toString())
         binding.etWorkSeconds.setText(viewModel.workSeconds.value.toString())
         binding.etRestSeconds.setText(viewModel.restSeconds.value.toString())
@@ -81,6 +82,7 @@ class WorkoutSetupFragment : Fragment() {
     }
 
     private fun updateInputFields() {
+        binding.etWorkoutName.setText(viewModel.workoutName.value)
         binding.etReadySeconds.setText(viewModel.readySeconds.value.toString())
         binding.etWorkSeconds.setText(viewModel.workSeconds.value.toString())
         binding.etRestSeconds.setText(viewModel.restSeconds.value.toString())
@@ -88,6 +90,7 @@ class WorkoutSetupFragment : Fragment() {
     }
 
     private fun syncInputsToViewModel() {
+        viewModel.workoutName.value = binding.etWorkoutName.text.toString()
         viewModel.readySeconds.value = binding.etReadySeconds.text.toString().toIntOrNull() ?: 30
         viewModel.workSeconds.value = binding.etWorkSeconds.text.toString().toIntOrNull() ?: 60
         viewModel.restSeconds.value = binding.etRestSeconds.text.toString().toIntOrNull() ?: 60

@@ -18,6 +18,7 @@ class WorkoutSetupViewModel(application: Application) : AndroidViewModel(applica
     private val repository = WorkoutRepository.getInstance(application)
 
     val selectedPreset = MutableLiveData<WorkoutPreset?>(null)
+    val workoutName = MutableLiveData<String>("")
     val readySeconds = MutableLiveData(30)
     val workSeconds = MutableLiveData(60)
     val restSeconds = MutableLiveData(60)
@@ -28,6 +29,7 @@ class WorkoutSetupViewModel(application: Application) : AndroidViewModel(applica
 
     fun applyPreset(preset: WorkoutPreset) {
         selectedPreset.value = preset
+        workoutName.value = preset.name
         readySeconds.value = preset.readySeconds
         workSeconds.value = preset.workSeconds
         restSeconds.value = preset.restSeconds
@@ -36,9 +38,12 @@ class WorkoutSetupViewModel(application: Application) : AndroidViewModel(applica
 
     fun createAndStartSession() {
         viewModelScope.launch {
-            val dateStr = SimpleDateFormat("M월 d일 인터벌 운동", Locale.KOREAN).format(Date())
+            val dateStr = SimpleDateFormat("M월 d일", Locale.KOREAN).format(Date())
+            val name = if (workoutName.value.isNullOrBlank()) "인터벌 운동" else workoutName.value
+            val title = "$dateStr $name"
+            
             val session = WorkoutSession(
-                title = dateStr,
+                title = title,
                 date = System.currentTimeMillis(),
                 readySeconds = readySeconds.value ?: 30,
                 workSeconds = workSeconds.value ?: 60,

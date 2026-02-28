@@ -9,6 +9,8 @@
     <string name="btn_start_workout">운동 시작!</string>
     <string name="preset_title">추천 프리셋</string>
     <string name="custom_title">직접 설정</string>
+    <string name="workout_name_label">운동 이름 (예: 달리기, 스쿼트)</string>
+    <string name="workout_name_hint">운동 이름을 입력해주세요</string>
     <string name="tts_style_title">AI 코치 스타일</string>
     <string name="ready_seconds_label">준비 시간 (초)</string>
     <string name="work_seconds_label">운동 시간 (초)</string>

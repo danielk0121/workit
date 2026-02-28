@@ -120,3 +120,11 @@
     - `fragment_profile.xml`에 목표 진행도(ProgressBar) 및 목표 수치 조절 버튼 UI 추가
     - `ProfileFragment`에서 LiveData 관찰 및 목표 증감 버튼 이벤트 바인딩
     - 빌드 확인 및 목표 수치 변경에 따른 진행도 즉시 반영 로직 검증 완료
+
+- 2026-03-01 16:10:00 (+09:00)
+  - [x] 기능 구현: 운동 종류 커스텀 (달리기 외 다른 인터벌 운동 지원)
+    - `strings.xml`에 운동 이름 관련 라벨 및 힌트 문자열 추가
+    - `fragment_workout_setup.xml`에 운동 이름을 입력할 수 있는 `TextInputLayout` 및 `EditText` 추가
+    - `WorkoutSetupViewModel`에서 `workoutName` 데이터를 관리하고 세션 생성 시 날짜와 함께 타이틀로 조합하도록 개선
+    - `WorkoutSetupFragment`에서 프리셋 선택 시 해당 이름을 자동 입력하고 사용자 정의 입력을 동기화하도록 구현
+    - 빌드 확인 및 커스텀 운동 이름이 포함된 세션 생성 로직 검증 완료
