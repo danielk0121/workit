@@ -128,6 +128,7 @@ class WorkoutTimerService : Service() {
 
             // DONE
             _timerState.value = TimerState(WorkoutState.DONE, 0, repeatCount, repeatCount, elapsedSeconds)
+            WearableManager.sendWorkoutStatus(this@WorkoutTimerService, WorkoutState.DONE, 0, repeatCount, repeatCount)
             val (chat, tts) = BotScript.getDoneMessage(ttsStyle, repeatCount, elapsedSeconds)
             emitBotMessage(chat, tts, WorkoutState.DONE)
             ttsManager.speak(tts)
@@ -146,13 +147,24 @@ class WorkoutTimerService : Service() {
         updateNotification(stateLabel(state))
 
         for (remaining in totalSeconds downTo 0) {
+            val round = if (state == WorkoutState.RUNNING || state == WorkoutState.REST) currentRoundFromElapsed() else 1
             _timerState.value = TimerState(
                 workoutState = state,
                 remainingSeconds = remaining,
-                currentRound = if (state == WorkoutState.RUNNING) currentRoundFromElapsed() else currentRoundFromElapsed(),
+                currentRound = round,
                 totalRounds = repeatCount,
                 elapsedSeconds = elapsedSeconds
             )
+            
+            // Sync with Wear OS
+            WearableManager.sendWorkoutStatus(
+                this@WorkoutTimerService,
+                state,
+                remaining,
+                round,
+                repeatCount
+            )
+
             if (remaining == 10 && state != WorkoutState.DONE) {
                 val (chat, tts) = BotScript.getCountdownWarningMessage(ttsStyle, 10)
                 emitBotMessage(chat, tts, state)

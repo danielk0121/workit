@@ -146,3 +146,12 @@
     - `Intent.ACTION_SEND`를 사용하여 외부 메신저 및 SNS로 운동 가이드를 공유할 수 있는 기능 추가
     - 빌드 시 발생한 `R` 클래스 임포트 누락 오류 수정 및 최종 빌드 성공 확인
 
+- 2026-03-01 17:45:00 (+09:00)
+  - [x] 기능 구현: 워치 연동 (Wear OS 지원 기반 구축)
+    - `libs.versions.toml` 및 `build.gradle.kts`에 `play-services-wearable` 의존성 추가
+    - `WearableManager` (Object) 클래스 구현: 워치로 운동 상태 데이터를 전송하기 위한 DataLayer API 연동
+    - `WorkoutTimerService`의 각 페이즈(`runPhase`) 및 운동 종료 시점에 워치와 실시간 데이터 동기화 로직 추가
+    - 워치에서 운동 상태(준비/운동/휴식/완료), 남은 시간, 현재 라운드 정보를 실시간으로 확인할 수 있는 기반 마련
+    - 빌드 확인 및 데이터 전송 레이어 연동 성공 확인
+
+
