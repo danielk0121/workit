@@ -146,33 +146,40 @@ class WorkoutTimerService : Service() {
         onStart()
         updateNotification(stateLabel(state))
 
-        for (remaining in totalSeconds downTo 0) {
-            val round = if (state == WorkoutState.RUNNING || state == WorkoutState.REST) currentRoundFromElapsed() else 1
-            _timerState.value = TimerState(
-                workoutState = state,
-                remainingSeconds = remaining,
-                currentRound = round,
-                totalRounds = repeatCount,
-                elapsedSeconds = elapsedSeconds
-            )
-            
-            // Sync with Wear OS
-            WearableManager.sendWorkoutStatus(
-                this@WorkoutTimerService,
-                state,
-                remaining,
-                round,
-                repeatCount
-            )
+        val startTime = System.currentTimeMillis()
+        val endTime = startTime + (totalSeconds * 1000L)
+        var lastRemaining = totalSeconds
 
-            if (remaining == 10 && state != WorkoutState.DONE) {
-                val (chat, tts) = BotScript.getCountdownWarningMessage(ttsStyle, 10)
-                emitBotMessage(chat, tts, state)
-                ttsManager.speak(tts)
+        while (true) {
+            val now = System.currentTimeMillis()
+            val remaining = ((endTime - now + 999) / 1000).toInt().coerceAtLeast(0)
+            
+            if (remaining != lastRemaining || now == startTime) {
+                val round = if (state == WorkoutState.RUNNING || state == WorkoutState.REST) currentRoundFromElapsed() else 1
+                _timerState.value = TimerState(
+                    workoutState = state,
+                    remainingSeconds = remaining,
+                    currentRound = round,
+                    totalRounds = repeatCount,
+                    elapsedSeconds = elapsedSeconds
+                )
+                
+                WearableManager.sendWorkoutStatus(this@WorkoutTimerService, state, remaining, round, repeatCount)
+
+                if (remaining == 10 && lastRemaining > 10 && state != WorkoutState.DONE) {
+                    val (chat, tts) = BotScript.getCountdownWarningMessage(ttsStyle, 10)
+                    emitBotMessage(chat, tts, state)
+                    ttsManager.speak(tts)
+                }
+                
+                if (remaining < lastRemaining) {
+                    elapsedSeconds++
+                }
+                lastRemaining = remaining
             }
-            if (remaining == 0) break
-            delay(1000)
-            elapsedSeconds++
+
+            if (now >= endTime) break
+            delay(100) // Check more frequently for sub-second accuracy
         }
     }
 
